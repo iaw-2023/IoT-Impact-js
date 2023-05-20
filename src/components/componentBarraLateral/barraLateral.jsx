@@ -75,6 +75,7 @@ const BarraLateral = () => {
       })
       .catch((error) => {
         // Muestro mensaje de error
+        window.confirm('Hubo un error al procesar su orden.');
         console.error('Error placing order:', error);
       });
   };
