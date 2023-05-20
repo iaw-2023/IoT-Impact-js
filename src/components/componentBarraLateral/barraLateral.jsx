@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Tab, Nav, Card } from 'react-bootstrap';
 
 const BarraLateral = () => {
-  const [activeTab, setActiveTab] = useState('');
-  const [categories, setCategories] = useState([]);
-  const [products, setProducts] = useState([]);
+  const [activeTab, setActiveTab] = useState(''); //active tab, se inicializa en '', y la funcion setActiveTab la updatea
+  const [categories, setCategories] = useState([]); //categories, se inicializa como un arreglo vacio, y la funcion setCategories lo updatea
+  const [products, setProducts] = useState([]); //products, se inicializa como un arreglo vacio, y la funcion setProducts lo updatea
+  const [cartItems, setCartItems] = useState([]); //cartItems, se inicializa como un arreglo vacio, y la funcion setCartItems lo updatea
+
 
   useEffect(() => {
     fetch('https://iot-impact-laravel-dl17wkn66-iot-impact.vercel.app/rest/categories')
@@ -25,6 +27,15 @@ const BarraLateral = () => {
     setActiveTab(eventKey);
   };
 
+  //Agregar al carrito
+  const addToCart = (product) => {
+    const confirmed = window.confirm('¿Estas seguro que queres agregar este producto al carrito?');
+    if (confirmed) {
+      setCartItems((prevCartItems) => [...prevCartItems, product]);
+    }
+  };
+
+  //Mostrar las cards
   const renderCards = () => {
     const category = categories.find((cat) => cat.name === activeTab);
 
@@ -34,7 +45,7 @@ const BarraLateral = () => {
       );
 
       return categoryProducts.map((product) => (
-        <Card key={product.id}>
+        <Card key={product.id} onClick={() => addToCart(product)}>
           <Card.Body>
             <h5>{product.name}</h5>
             <p>Price: {product.price}</p>
@@ -48,28 +59,34 @@ const BarraLateral = () => {
   };
 
   return (
-    <Tab.Container activeKey={activeTab} onSelect={handleTabChange}>
-      <div className="row">
-        <div className="col-4">
-          <Nav variant="pills" className="flex-column">
-            {categories.map((category) => (
-              <Nav.Item key={category.id}>
-                <Nav.Link eventKey={category.name}>{category.name}</Nav.Link>
-              </Nav.Item>
-            ))}
-          </Nav>
+    //Muestro el carrito
+    <div>
+
+      <p>Cart Items: {cartItems.length}</p>
+
+      <Tab.Container activeKey={activeTab} onSelect={handleTabChange}>
+        <div className="row">
+          <div className="col-4">
+            <Nav variant="pills" className="flex-column">
+              {categories.map((category) => (
+                <Nav.Item key={category.id}>
+                  <Nav.Link eventKey={category.name}>{category.name}</Nav.Link>
+                </Nav.Item>
+              ))}
+            </Nav>
+          </div>
+          <div className="col-8">
+            <Tab.Content>
+              {categories.map((category) => (
+                <Tab.Pane key={category.id} eventKey={category.name}>
+                  {renderCards()}
+                </Tab.Pane>
+              ))}
+            </Tab.Content>
+          </div>
         </div>
-        <div className="col-8">
-          <Tab.Content>
-            {categories.map((category) => (
-              <Tab.Pane key={category.id} eventKey={category.name}>
-                {renderCards()}
-              </Tab.Pane>
-            ))}
-          </Tab.Content>
-        </div>
-      </div>
-    </Tab.Container>
+      </Tab.Container>
+    </div>
   );
 };
 
