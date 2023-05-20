@@ -2,11 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { Tab, Nav, Card } from 'react-bootstrap';
 
 const BarraLateral = () => {
-  const [activeTab, setActiveTab] = useState('hamburguesas'); //por default la pestaña hamburguesas esta seleccionada, setActiveTab updatea a activeTab
-  const [products, setProducts] = useState([]); //products es un array inicializado por default vacio [], setProducts actualiza este array
+  const [activeTab, setActiveTab] = useState('');
+  const [categories, setCategories] = useState([]);
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    fetch('https://iot-impact-laravel.vercel.app/rest/products')
+    fetch('https://iot-impact-laravel-dl17wkn66-iot-impact.vercel.app/rest/categories')
+      .then((response) => response.json())
+      .then((data) => {
+        setCategories(data);
+        setActiveTab(data[0]?.name || '');
+      })
+      .catch((error) => console.log(error));
+
+    fetch('https://iot-impact-laravel-dl17wkn66-iot-impact.vercel.app/rest/products')
       .then((response) => response.json())
       .then((data) => setProducts(data))
       .catch((error) => console.log(error));
@@ -17,12 +26,14 @@ const BarraLateral = () => {
   };
 
   const renderCards = () => {
-    if (activeTab === 'hamburguesas') {
-      const hamburguesaProducts = products.filter(
-        (product) => product.product_category_id === 1
+    const category = categories.find((cat) => cat.name === activeTab);
+
+    if (category) {
+      const categoryProducts = products.filter(
+        (product) => product.product_category_id === category.id
       );
 
-      return hamburguesaProducts.map((product) => (
+      return categoryProducts.map((product) => (
         <Card key={product.id}>
           <Card.Body>
             <h5>{product.name}</h5>
@@ -32,11 +43,8 @@ const BarraLateral = () => {
           </Card.Body>
         </Card>
       ));
-    } else if (activeTab === 'papas') {
-      // Render cards for "Papas" category
-    } else if (activeTab === 'bebidas') {
-      // Render cards for "Bebidas" category
     }
+    return null;
   };
 
   return (
@@ -44,28 +52,20 @@ const BarraLateral = () => {
       <div className="row">
         <div className="col-4">
           <Nav variant="pills" className="flex-column">
-            <Nav.Item>
-              <Nav.Link eventKey="hamburguesas">Hamburguesas</Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link eventKey="papas">Papas</Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link eventKey="bebidas">Bebidas</Nav.Link>
-            </Nav.Item>
+            {categories.map((category) => (
+              <Nav.Item key={category.id}>
+                <Nav.Link eventKey={category.name}>{category.name}</Nav.Link>
+              </Nav.Item>
+            ))}
           </Nav>
         </div>
         <div className="col-8">
           <Tab.Content>
-            <Tab.Pane eventKey="hamburguesas">
-              {renderCards()}
-            </Tab.Pane>
-            <Tab.Pane eventKey="papas">
-              {renderCards()}
-            </Tab.Pane>
-            <Tab.Pane eventKey="bebidas">
-              {renderCards()}
-            </Tab.Pane>
+            {categories.map((category) => (
+              <Tab.Pane key={category.id} eventKey={category.name}>
+                {renderCards()}
+              </Tab.Pane>
+            ))}
           </Tab.Content>
         </div>
       </div>
