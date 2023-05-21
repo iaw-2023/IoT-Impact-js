@@ -144,10 +144,10 @@ const BarraLateral = () => {
 
   return (
     <div>
-      
-
-      <OverlayTrigger trigger="click" placement="right" overlay={popoverCarrito}>
-        <Button variant="success">Carrito: {cartItems.length}</Button>
+      <OverlayTrigger trigger="click" placement="left" overlay={popoverCarrito}>
+        <Button variant="success" className="carrito-button">
+          Carrito: {cartItems.length}
+        </Button>
       </OverlayTrigger>
 
       <Tab.Container activeKey={activeTab} onSelect={handleTabChange}>

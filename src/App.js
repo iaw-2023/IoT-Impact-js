@@ -5,6 +5,7 @@ import React from 'react';
 function App() {
   return (
     <div>
+      <h1 className="titulo">BurgerPlanet</h1>
       <BarraLateral />
       <main>
         {/* Other components or content */}

@@ -36,3 +36,17 @@
     transform: rotate(360deg);
   }
 }
+
+.carrito-button {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+}
+
+.titulo {
+  color:black;
+}
+
+body {
+  background-color: #40397a;
+}
