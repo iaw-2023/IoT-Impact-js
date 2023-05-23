@@ -133,7 +133,6 @@ const BarraLateral = () => {
           <Card.Body>
             <h5>{product.name}</h5>
             <p>Price: {product.price}</p>
-            <p>Stock: {product.stock}</p>
             <p>{product.description}</p>
           </Card.Body>
         </Card>
