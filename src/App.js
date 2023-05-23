@@ -1,5 +1,5 @@
 import "./App.css";
-import BarraLateral from "./components/componentBarraLateral/barraLateral";
+import BarraLateral from "./components/BarraLateral";
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Checkout from "./Checkout";
