@@ -43,8 +43,25 @@
   right: 10px;
 }
 
+@font-face {
+  font-family: 'Burger Nation';
+  src: url(/src/fonts/Burger\ Nation.otf) format('truetype');
+}
+
 .titulo {
-  color:black;
+  color:white;
+  font-family: "Burger Nation", sans-serif;
+  font-size: 28px;
+  text-shadow: 
+  -2px -2px 0 black, 
+  2px -2px 0 black, 
+  -2px 2px 0 black, 
+  2px 2px 0 black;
+}
+
+.logo {
+  width: 60px; /* Adjust the width as needed */
+  height: auto; /* Maintain aspect ratio */
 }
 
 body {
