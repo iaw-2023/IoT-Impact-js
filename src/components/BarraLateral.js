@@ -4,6 +4,7 @@ import { Tab } from "react-bootstrap";
 import Categories from "./Categories";
 import Products from "./Products";
 import Cart from "./Cart";
+import Swal from 'sweetalert2';
 
 const BarraLateral = () => {
   const [activeTab, setActiveTab] = useState(""); //active tab, se inicializa en '', y la funcion setActiveTab la updatea
@@ -84,8 +85,15 @@ const BarraLateral = () => {
       .then((response) => response.json())
       .then((data) => {
         // Muestro mensaje de exito
-        window.confirm("Compra exitosa.");
-        console.log("Order placed successfully:", data);
+        //window.confirm("Compra exitosa.");
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Compra exitosa',
+          showConfirmButton: true,
+          //timer: 1500
+        })
+        console.log("Order placed successfully: ", data);
         // Resetear el carrito y el mail
         setCartItems([]);
         setCustomerEmail([""]);
