@@ -1,5 +1,6 @@
 import React from "react";
 import { Card, Container, Row, Col } from "react-bootstrap";
+import { FaPlus } from "react-icons/fa";
 
 const Products = ({ categories, activeTab, products, addToCart }) => {
   const renderCards = () => {
@@ -12,13 +13,21 @@ const Products = ({ categories, activeTab, products, addToCart }) => {
 
       return categoryProducts.map((product) => (
         <Col key={product.id} xs={12} sm={6} md={4} lg={4} xl={4}>
-          <Card className="custom-card" onClick={() => addToCart(product)}>
+          <Card className="custom-card">
             {product.image && <Card.Img variant="top" src={product.image} />}
             <Card.Body>
               <Card.Title>{product.name}</Card.Title>
               <Card.Text>Price: {product.price}</Card.Text>
               <Card.Text>{product.description}</Card.Text>
             </Card.Body>
+            <Card.Footer>
+              <div
+                className="add-to-cart-icon"
+                onClick={() => addToCart(product)}
+              >
+                <FaPlus />
+              </div>
+            </Card.Footer>
           </Card>
         </Col>
       ));
@@ -28,9 +37,7 @@ const Products = ({ categories, activeTab, products, addToCart }) => {
 
   return (
     <Container fluid>
-      <Row>
-        {renderCards()}
-      </Row>
+      <Row>{renderCards()}</Row>
     </Container>
   );
 };

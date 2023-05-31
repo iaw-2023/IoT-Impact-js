@@ -186,3 +186,37 @@ body {
   background-color: #555; /* Cambia el color de fondo del botón en hover */
 }
 
+.progress-bar {
+  margin-top: 20px;
+  animation: progress-bar-animation 1s infinite;
+}
+
+@keyframes progress-bar-animation {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+.progress-bar-text {
+  position: absolute;
+  top: 3%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 16px;
+  color: #000;
+}
+
+.add-to-cart-icon {
+  cursor: pointer;
+  position: absolute;
+  top: 93%;
+  left: 45%;
+  transition: color 0.3s;
+}
+
+.add-to-cart-icon:hover {
+  color: red; /* Change to the desired hover color */
+}

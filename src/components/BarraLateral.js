@@ -1,17 +1,19 @@
 // BarraLateral.js
 import React, { useState, useEffect } from "react";
-import { Tab } from "react-bootstrap";
+import { Tab, ProgressBar } from "react-bootstrap";
 import Categories from "./Categories";
 import Products from "./Products";
+import Swal from "sweetalert2";
 
 const BarraLateral = ({ cartItems, setCartItems }) => {
-  const [activeTab, setActiveTab] = useState(""); //active tab, se inicializa en '', y la funcion setActiveTab la updatea
-  const [categories, setCategories] = useState([]); //categories, se inicializa como un arreglo vacio, y la funcion setCategories lo updatea
-  const [products, setProducts] = useState([]); //products, se inicializa como un arreglo vacio, y la funcion setProducts lo updatea
-
-
+  const [activeTab, setActiveTab] = useState("");
+  const [categories, setCategories] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
+
     fetch(
       "https://iot-impact-laravel-dl17wkn66-iot-impact.vercel.app/rest/categories"
     )
@@ -26,7 +28,10 @@ const BarraLateral = ({ cartItems, setCartItems }) => {
       "https://iot-impact-laravel-dl17wkn66-iot-impact.vercel.app/rest/products"
     )
       .then((response) => response.json())
-      .then((data) => setProducts(data))
+      .then((data) => {
+        setProducts(data);
+        setLoading(false);
+      })
       .catch((error) => console.log(error));
   }, []);
 
@@ -34,20 +39,29 @@ const BarraLateral = ({ cartItems, setCartItems }) => {
     setActiveTab(eventKey);
   };
 
-  //Agregar al carrito
   const addToCart = (product) => {
-    const confirmed = window.confirm(
-      "¿Estas seguro que queres agregar este producto al carrito?"
-    );
-    if (confirmed) {
-      setCartItems((prevCartItems) => [...prevCartItems, product]);
-    }
+    Swal.fire({
+      title: '¿Desea agregar el producto al carrito?',
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonText: 'No',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire(
+          'Agregado!',
+          'Tu producto se ha añadido al carrito',
+          'success'
+        )
+        setCartItems((prevCartItems) => [...prevCartItems, product]);
+      }
+    })
   };
-
 
   return (
     <div>
-
       <Tab.Container activeKey={activeTab} onSelect={handleTabChange}>
         <div className="row">
           <div className="col-2 sidebar">
@@ -58,12 +72,18 @@ const BarraLateral = ({ cartItems, setCartItems }) => {
             />
           </div>
           <div className="col-8">
-            <Products
-              categories={categories}
-              activeTab={activeTab}
-              products={products}
-              addToCart={addToCart}
-            />
+            {loading ? (
+              <ProgressBar animated now={100} className="progress-bar">
+                <span className="progress-bar-text">Cargando productos...</span>
+              </ProgressBar>
+            ) : (
+              <Products
+                categories={categories}
+                activeTab={activeTab}
+                products={products}
+                addToCart={addToCart}
+              />
+            )}
           </div>
         </div>
       </Tab.Container>
