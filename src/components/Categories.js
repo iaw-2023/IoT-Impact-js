@@ -4,15 +4,21 @@ import { Nav } from "react-bootstrap";
 
 const Categories = ({ categories, activeTab, handleTabChange }) => {
   return (
-    <Nav variant="pills" className="flex-column">
+    <div className="sidebar-container">
+    <Nav variant="pills" className="flex-column sidebar-categories">
       {categories.map((category) => (
-        <Nav.Item key={category.id}>
-          <Nav.Link eventKey={category.name} onSelect={handleTabChange}>
+        <Nav.Item key={category.id} className="sidebar-category">
+          <Nav.Link
+            eventKey={category.name}
+            onSelect={handleTabChange}
+            className="sidebar-link"
+          >
             {category.name}
           </Nav.Link>
         </Nav.Item>
       ))}
     </Nav>
+    </div>
   );
 };
 

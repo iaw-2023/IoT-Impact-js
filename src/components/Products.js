@@ -1,10 +1,8 @@
-// Products.js
 import React from "react";
-import { Card } from "react-bootstrap";
+import { Card, Container, Row, Col } from "react-bootstrap";
 
 const Products = ({ categories, activeTab, products, addToCart }) => {
   const renderCards = () => {
-				
     const category = categories.find((cat) => cat.name === activeTab);
 
     if (category) {
@@ -13,21 +11,28 @@ const Products = ({ categories, activeTab, products, addToCart }) => {
       );
 
       return categoryProducts.map((product) => (
-        <Card key={product.id} onClick={() => addToCart(product)}>
-          <Card.Body>
-            <h5>{product.name}</h5>
-            <p>Price: {product.price}</p>
-
-            <p>{product.description}</p>
-          </Card.Body>
-        </Card>
+        <Col key={product.id} xs={12} sm={6} md={4} lg={4} xl={4}>
+          <Card className="custom-card" onClick={() => addToCart(product)}>
+            {product.image && <Card.Img variant="top" src={product.image} />}
+            <Card.Body>
+              <Card.Title>{product.name}</Card.Title>
+              <Card.Text>Price: {product.price}</Card.Text>
+              <Card.Text>{product.description}</Card.Text>
+            </Card.Body>
+          </Card>
+        </Col>
       ));
     }
     return null;
-
   };
 
-  return <div>{renderCards()}</div>;
+  return (
+    <Container fluid>
+      <Row>
+        {renderCards()}
+      </Row>
+    </Container>
+  );
 };
 
 export default Products;
