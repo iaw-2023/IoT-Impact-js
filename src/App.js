@@ -8,14 +8,13 @@ import Cart from "./components/Cart";
 import Swal from "sweetalert2";
 
 function App() {
-  const [cartItems, setCartItems] = useState([]); // Mueve la declaración de cartItems aquí
-  const [customerEmail, setCustomerEmail] = useState(""); // Mueve la declaración de customerEmail aquí
+  const [cartItems, setCartItems] = useState([]);
+  const [customerEmail, setCustomerEmail] = useState("");
 
   const handleEmailChange = (event) => {
     setCustomerEmail(event.target.value);
   };
 
-  //Funcion que se ejecuta al clickear el "-" en el popover del carrito
   const removeProductFromCart = (productId) => {
     setCartItems((prevCartItems) =>
       prevCartItems.filter((product) => product.id !== productId)
@@ -98,6 +97,7 @@ function App() {
             element={
               <BarraLateral
                 cartItems={cartItems}
+                setCartItems={setCartItems}
                 customerEmail={customerEmail}
                 handleEmailChange={handleEmailChange}
                 aceptarCompra={aceptarCompra}

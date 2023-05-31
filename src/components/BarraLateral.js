@@ -4,10 +4,7 @@ import { Tab } from "react-bootstrap";
 import Categories from "./Categories";
 import Products from "./Products";
 
-import { setCartItems } from 'react'; // Agrega esta línea
-//import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
-
-const BarraLateral = () => {
+const BarraLateral = ({ cartItems, setCartItems }) => {
   const [activeTab, setActiveTab] = useState(""); //active tab, se inicializa en '', y la funcion setActiveTab la updatea
   const [categories, setCategories] = useState([]); //categories, se inicializa como un arreglo vacio, y la funcion setCategories lo updatea
   const [products, setProducts] = useState([]); //products, se inicializa como un arreglo vacio, y la funcion setProducts lo updatea
