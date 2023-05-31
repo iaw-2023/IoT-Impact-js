@@ -17,7 +17,7 @@ const Products = ({ categories, activeTab, products, addToCart }) => {
             {product.image && <Card.Img variant="top" src={product.image} />}
             <Card.Body>
               <Card.Title>{product.name}</Card.Title>
-              <Card.Text>Price: {product.price}</Card.Text>
+              <Card.Text>Precio: {product.price}</Card.Text>
               <Card.Text>{product.description}</Card.Text>
             </Card.Body>
             <Card.Footer>
