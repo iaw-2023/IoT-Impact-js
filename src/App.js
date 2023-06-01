@@ -37,7 +37,7 @@ function App() {
     };
 
     fetch(
-      "https://iot-impact-laravel-dl17wkn66-iot-impact.vercel.app/rest/orders",
+      "https://iot-impact-laravel.vercel.app/rest/orders",
       {
         method: "POST",
         headers: {
