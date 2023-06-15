@@ -1,7 +1,5 @@
-// Cart.js
 import React from "react";
 import { Button, OverlayTrigger, Popover } from "react-bootstrap";
-
 
 const Cart = ({
   cartItems,
@@ -35,7 +33,7 @@ const Cart = ({
             0
           )}
         </div>
-        <Button variant="primary" onClick={aceptarCompra}>
+        <Button variant="primary" onClick={aceptarCompra} disabled={cartItems.length === 0}>
           Comprar
         </Button>
         <input
@@ -47,7 +45,6 @@ const Cart = ({
       </Popover.Body>
     </Popover>
   );
-
 
   return (
     <OverlayTrigger trigger="click" placement="left" overlay={popoverCarrito}>
