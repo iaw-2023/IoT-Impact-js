@@ -1,4 +1,3 @@
-// App.js
 import "./App.css";
 import BarraLateral from "./components/BarraLateral";
 import React, { useState } from "react";
@@ -21,7 +20,6 @@ function App() {
     );
   };
 
-  //Funcion que se ejecuta luego de clickear aceptar compra en el popover del carrito
   const aceptarCompra = () => {
     const orderData = {
       customer_email: customerEmail,
@@ -36,37 +34,33 @@ function App() {
       })),
     };
 
-    fetch(
-      "https://iot-impact-laravel.vercel.app/rest/orders",
-      {
+    return new Promise((resolve, reject) => {
+      fetch("https://iot-impact-laravel.vercel.app/rest/orders", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(orderData),
-      }
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        // Muestro mensaje de exito
-        //window.confirm("Compra exitosa.");
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Compra exitosa",
-          showConfirmButton: true,
-          //timer: 1500
-        });
-        console.log("Order placed successfully: ", data);
-        // Resetear el carrito y el mail
-        setCartItems([]);
-        setCustomerEmail([""]);
       })
-      .catch((error) => {
-        // Muestro mensaje de error
-        window.confirm("Hubo un error al procesar su orden.");
-        console.error("Error placing order:", error);
-      });
+        .then((response) => response.json())
+        .then((data) => {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Compra exitosa",
+            showConfirmButton: true,
+          });
+          console.log("Order placed successfully: ", data);
+          setCartItems([]);
+          setCustomerEmail("");
+          resolve();
+        })
+        .catch((error) => {
+          window.confirm("Hubo un error al procesar su orden.");
+          console.error("Error placing order:", error);
+          reject(error);
+        });
+    });
   };
 
   return (
