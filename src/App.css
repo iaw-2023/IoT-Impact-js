@@ -14,7 +14,9 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  /*background-color: #282c34; */
+
+  background-color: #333; /* Establece un color de fondo oscuro */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -35,4 +37,186 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.carrito-button {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+}
+
+@font-face {
+  font-family: 'Burger Nation';
+  src: url(/src/fonts/Burger\ Nation.otf) format('truetype');
+}
+
+.titulo {
+  color: white;
+  font-family: "Burger Nation", sans-serif;
+  font-size: 28px;
+  text-shadow: -2px -2px 0 black, 2px -2px 0 black, -2px 2px 0 black, 2px 2px 0 black;
+  margin-left: 0;
+  margin-right: 0; /* Elimina el margen derecho */
+  padding-left: 0;
+  padding-right: 0; /* Elimina el padding derecho */
+  background-color: #333;
+  width: 100%; /* Establece el ancho al 100% */
+}
+
+
+.logo {
+  width: 60px; /* Adjust the width as needed */
+  height: auto; /* Maintain aspect ratio */
+}
+
+body {
+  background-color: #40397a;
+}
+
+.container {
+  /* Elimina la regla de ancho existente */
+  display: flex;
+  flex-direction: column;
+  margin-left: 0;
+  margin-right: 0; /* Elimina el margen derecho */
+  padding-left: 0;
+  padding-right: 0; /* Elimina el padding derecho */
+}
+
+
+.header {
+  background-color: #333;
+  color: white;
+  margin: 0;
+  width: 100vw; /* Establece el ancho al 100% de la ventana visible */
+}
+
+
+
+.sidebar {
+  width: 200px;
+  background-color: #333; /* Establece un color de fondo oscuro */
+  padding: 20px;
+  color: white;
+}
+
+.sidebar-categories {
+  width: fit-content; /* Ajusta el contenedor de las categorías al ancho del contenido */
+  max-width: 200px; /* Establece un ancho máximo para evitar que las categorías se extiendan demasiado */
+  margin-right: 20px; /* Agrega un margen derecho para separar las categorías del resto de los elementos */
+}
+
+.sidebar-category {
+  margin-bottom: 5px;
+}
+
+.sidebar-link {
+  padding: 5px 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+.sidebar-container {
+  height: 100vh; /* Ajusta la altura al 100% del viewport */
+  background-color: #333; /* Establece un color de fondo oscuro */
+  color: white; /* Establece el color de texto en blanco */
+  /*padding: 20px; /* Agrega un espacio interno */
+  overflow-y: auto; /* Habilita el desplazamiento vertical si el contenido excede el alto */
+}
+
+.sidebar-container::-webkit-scrollbar {
+  width: 6px; /* Ancho del scrollbar */
+}
+
+.sidebar-container::-webkit-scrollbar-thumb {
+  background-color: #555; /* Color del scrollbar */
+  border-radius: 3px; /* Borde redondeado del scrollbar */
+}
+
+.sidebar-container::-webkit-scrollbar-track {
+  background-color: #333; /* Color de fondo del scrollbar */
+}
+
+
+.custom-card {
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%; /* Ajusta el ancho al 80% del contenedor */
+  margin-bottom: 10px;
+ /* min-width: 200px; */
+}
+
+
+.custom-card:hover {
+  transform: translateY(-2px); /* Agrega una transición al hacer hover */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Aumenta la sombra en hover */
+}
+
+.custom-card .card-img-top {
+  object-fit: cover; /* Ajusta el tamaño de la imagen para que se ajuste al contenedor */
+  height: 200px; /* Establece una altura fija para la imagen */
+  border-top-left-radius: 10px; /* Agrega esquinas redondeadas a la parte superior izquierda de la imagen */
+  border-top-right-radius: 10px; /* Agrega esquinas redondeadas a la parte superior derecha de la imagen */
+}
+
+.custom-card .card-title {
+  font-size: 18px; /* Cambia el tamaño del título */
+  color: #333; /* Cambia el color del título */
+  margin-bottom: 10px; /* Agrega un margen inferior al título */
+}
+
+.custom-card .card-text {
+  color: #666; /* Cambia el color del texto */
+  margin-bottom: 10px; /* Agrega un margen inferior al texto */
+}
+
+.custom-card .btn {
+  background-color: #333; /* Cambia el color de fondo del botón */
+  color: #fff; /* Cambia el color del texto del botón */
+  border: none; /* Elimina el borde del botón */
+  
+}
+
+.custom-card .btn:hover {
+  background-color: #555; /* Cambia el color de fondo del botón en hover */
+}
+
+.progress-bar {
+  margin-top: 20px;
+  animation: progress-bar-animation 1s infinite;
+}
+
+@keyframes progress-bar-animation {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+.progress-bar-text {
+  position: absolute;
+  top: 3%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 16px;
+  color: #000;
+}
+
+.add-to-cart-icon {
+  cursor: pointer;
+  position: absolute;
+  top: 93%;
+  left: 45%;
+  transition: color 0.3s;
+}
+
+.add-to-cart-icon:hover {
+  color: red; /* Change to the desired hover color */
 }
