@@ -15,7 +15,7 @@ const BarraLateral = ({ cartItems, setCartItems }) => {
     setLoading(true);
 
     fetch(
-      "https://iot-impact-laravel.vercel.app/rest/categories"
+      "https://iot-impact-nodejs.vercel.app/rest/categories"
     )
       .then((response) => response.json())
       .then((data) => {
@@ -25,7 +25,7 @@ const BarraLateral = ({ cartItems, setCartItems }) => {
       .catch((error) => console.log(error));
 
     fetch(
-      "https://iot-impact-laravel.vercel.app/rest/products"
+      "https://iot-impact-nodejs.vercel.app/rest/products"
     )
       .then((response) => response.json())
       .then((data) => {
