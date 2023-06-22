@@ -5,7 +5,7 @@ import Categories from "./Categories";
 import Products from "./Products";
 import Swal from "sweetalert2";
 
-const BarraLateral = ({ cartItems, setCartItems }) => {
+const BarraLateral = ({ setCartItems }) => {
   const [activeTab, setActiveTab] = useState("");
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);

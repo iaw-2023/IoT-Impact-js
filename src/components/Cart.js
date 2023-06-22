@@ -3,8 +3,6 @@ import { Button, OverlayTrigger, Popover } from "react-bootstrap";
 
 const Cart = ({
   cartItems,
-  customerEmail,
-  handleEmailChange,
   aceptarCompra,
   removeProductFromCart,
 }) => {
@@ -45,16 +43,10 @@ const Cart = ({
         <Button
           variant="primary"
           onClick={handlePurchase}
-          disabled={isPurchasing || cartItems.length === 0 || customerEmail.trim() === ""} // Disable button when purchasing or no items in the cart or empty email box
+          disabled={isPurchasing || cartItems.length === 0} // Disable button when purchasing or no items in the cart or empty email box
         >
           {isPurchasing ? "Comprando..." : "Comprar"} {/* Display different text based on the purchase status */}
         </Button>
-        <input
-          type="text"
-          value={customerEmail}
-          onChange={handleEmailChange}
-          placeholder="Ingrese su email"
-        />
       </Popover.Body>
     </Popover>
   );
