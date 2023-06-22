@@ -18,7 +18,14 @@ export function Formulario({ setUser }) {
 
   return (
     <section>
-      <h1>Login</h1>
+      <h1 className="titulo">
+            <img
+              src={"https://i.ibb.co/pdbcDkX/logo-sin-bp.png"}
+              alt="BurgerPlanet Logo"
+              className="logo"
+            />{" "}
+            BurgerPlanet
+          </h1>
       <form className="formulario" onSubmit={handleSubmit}>
         <input
           type="text"
