@@ -1,7 +1,7 @@
 import "./App.css";
 import React, { useState } from "react";
 import Home from "./components/Home";
-import { Formulario } from "./components/Formulario"
+import { Login } from "./components/Login"
 
 
 function App() {
@@ -10,8 +10,8 @@ function App() {
   return (
     <div className="App">
       {
-        !user.length > 0 //si el arreglo user tiene el mail del usuario, entonces ir a home, sino ir al formulario
-        ? <Formulario setUser={setUser}/>
+        !user.length > 0 //si el arreglo user tiene el mail del usuario, entonces ir a home, sino ir al login
+        ? <Login setUser={setUser}/>
         : <Home user={user} setUser={setUser}/>
       }
     </div>

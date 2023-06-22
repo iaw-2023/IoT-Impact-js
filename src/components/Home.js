@@ -13,32 +13,96 @@ function Home({user, setUser}) {
 
     const mostrarHistorialPedidos = () => {
       const mail = user[0]; // Variable con el email del usuario
-      const url = "https://iot-impact-laravel.vercel.app/rest/orders";
+      const ordersUrl = "https://iot-impact-laravel.vercel.app/rest/orders";
+      const itemsUrl = "https://iot-impact-laravel.vercel.app/rest/items";
     
-      // Obtener los datos del JSON en la URL
-      fetch(url)
+      // Mostrar mensaje de carga inicial
+      Swal.fire({
+        html: '<h5>Cargando...</h5>',
+        showConfirmButton: false,
+        onBeforeOpen: () => {
+          Swal.showLoading();
+        }
+      });
+    
+      // Obtener los datos del historial de pedidos
+      fetch(ordersUrl)
         .then(response => response.json())
-        .then(data => {
+        .then(ordersData => {
           // Filtrar los pedidos por customer_email igual a user
-          const pedidosUsuario = data.filter(pedido => pedido.customer_email === mail);
+          const pedidosUsuario = ordersData.filter(pedido => pedido.customer_email === mail);
     
           if (pedidosUsuario.length <= 0) {
             Swal.fire('No tiene pedidos', 'No se encontraron pedidos para el usuario actual.', 'info');
           } else {
-            const pedidosList = pedidosUsuario.map(pedido => `ID: ${pedido.id}, Total: ${pedido.total_amount}`);
-            Swal.fire({
-              title: 'Sus pedidos:',
-              html: `<ul>${pedidosList.map(pedido => `<li>${pedido}</li>`).join('')}</ul>`,
-              icon: 'info'
-            });
+            // Obtener los datos de los productos
+            fetch(itemsUrl)
+              .then(response => response.json())
+              .then(itemsData => {
+                const pedidosPromesas = pedidosUsuario.map((pedido, index) => {
+                  // Filtrar los productos comprados en el pedido actual
+                  const productosPedido = itemsData.filter(item => item.order_id === pedido.id);
+    
+                  // Obtener el precio total del pedido
+                  const precioTotalPedido = parseFloat(pedido.total_amount);
+    
+                  // Crear un array de promesas para obtener los nombres de los productos
+                  const productosPromesas = productosPedido.map(producto => {
+                    return obtenerNombreProducto(producto.product_id).then(nombreProducto => {
+                      return `<li>${nombreProducto} (Cantidad: ${producto.quantity})</li>`;
+                    });
+                  });
+    
+                  // Esperar a que todas las promesas se resuelvan y obtener los nombres de los productos
+                  return Promise.all(productosPromesas).then(productosTexto => {
+                    const numeroPedido = index + 1;
+                    const pedidoTexto = `<strong>Pedido ${numeroPedido}:</strong><ul>${productosTexto.join('')}</ul>`;
+                    const pedidoConPrecioTotalTexto = `${pedidoTexto}<p>Precio total del pedido: ${precioTotalPedido.toFixed(2)}</p>`;
+                    return pedidoConPrecioTotalTexto;
+                  });
+                });
+    
+                // Esperar a que todas las promesas de pedidos se resuelvan
+                Promise.all(pedidosPromesas)
+                  .then(pedidosTexto => {
+                    // Mostrar el resultado final como una lista
+                    Swal.fire({
+                      title: 'Sus pedidos:',
+                      html: pedidosTexto.join(''),
+                      icon: 'info'
+                    });
+                  })
+                  .catch(error => {
+                    console.log(error);
+                    Swal.fire('Error', 'No se pudo obtener la información de los productos.', 'error');
+                  });
+              })
+              .catch(error => {
+                console.log(error);
+                Swal.fire('Error', 'No se pudo obtener la información de los productos.', 'error');
+              });
           }
-          
         })
         .catch(error => {
           console.log(error);
           Swal.fire('Error', 'No se pudo obtener el historial de pedidos.', 'error');
         });
     };
+    
+    // Función auxiliar para obtener el nombre de un producto por su ID
+    const obtenerNombreProducto = (productId) => {
+      return fetch('https://iot-impact-laravel.vercel.app/rest/products')
+        .then(response => response.json())
+        .then(itemsData => {
+          const producto = itemsData.find(item => item.id === productId);
+          return producto ? producto.name : 'Desconocido';
+        })
+        .catch(error => {
+          console.error('Error al obtener los datos del producto:', error);
+          return 'Desconocido';
+        });
+    };
+    
   
     const removeProductFromCart = (productId) => {
       setCartItems((prevCartItems) =>

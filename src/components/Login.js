@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export function Formulario({ setUser }) {
+export function Login({ setUser }) {
   const [nombre, setNombre] = useState("");
   const [contraseña, setContraseña] = useState("");
   const [error, setError] = useState(false);
