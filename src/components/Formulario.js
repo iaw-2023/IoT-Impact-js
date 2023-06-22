@@ -13,7 +13,7 @@ export function Formulario({ setUser }) {
     }
     setError(false);
 
-    setUser([nombre]);
+    setUser([nombre.trim()]);
   };
 
   return (
