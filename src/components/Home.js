@@ -10,6 +10,35 @@ function Home({user, setUser}) {
     const handleLogout = () => {
       setUser([]) //vacia el arreglo, lo que envia a la pagina de login
     }
+
+    const mostrarHistorialPedidos = () => {
+      const mail = user[0]; // Variable con el email del usuario
+      const url = "https://iot-impact-laravel.vercel.app/rest/orders";
+    
+      // Obtener los datos del JSON en la URL
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          // Filtrar los pedidos por customer_email igual a user
+          const pedidosUsuario = data.filter(pedido => pedido.customer_email === mail);
+    
+          if (pedidosUsuario.length <= 0) {
+            Swal.fire('No tiene pedidos', 'No se encontraron pedidos para el usuario actual.', 'info');
+          } else {
+            const pedidosList = pedidosUsuario.map(pedido => `ID: ${pedido.id}, Total: ${pedido.total_amount}`);
+            Swal.fire({
+              title: 'Sus pedidos:',
+              html: `<ul>${pedidosList.map(pedido => `<li>${pedido}</li>`).join('')}</ul>`,
+              icon: 'info'
+            });
+          }
+          
+        })
+        .catch(error => {
+          console.log(error);
+          Swal.fire('Error', 'No se pudo obtener el historial de pedidos.', 'error');
+        });
+    };
   
     const removeProductFromCart = (productId) => {
       setCartItems((prevCartItems) =>
@@ -70,7 +99,8 @@ function Home({user, setUser}) {
             />{" "}
             BurgerPlanet
           </h1>
-          <h5> Bienvenido {user}!</h5>
+          <h5> Bienvenido {user[0]}!</h5>
+          <button onClick={mostrarHistorialPedidos}>Historial de pedidos</button>
           <button onClick={handleLogout}>Cerrar sesión</button>
           <Cart
             cartItems={cartItems}

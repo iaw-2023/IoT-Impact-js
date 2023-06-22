@@ -7,7 +7,7 @@ export function Formulario({ setUser }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (nombre === "" || contraseña === "") {
+    if (nombre.trim() === "" || contraseña.trim() === "") {
       setError(true);
       return;
     }
