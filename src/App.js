@@ -12,7 +12,7 @@ function App() {
       {
         !user.length > 0 //si el arreglo user tiene el mail del usuario, entonces ir a home, sino ir al formulario
         ? <Formulario setUser={setUser}/>
-        : <Home user={user}/>
+        : <Home user={user} setUser={setUser}/>
       }
     </div>
   

@@ -4,8 +4,12 @@ import BarraLateral from "./BarraLateral";
 import Cart from "./Cart";
 import Swal from "sweetalert2";
 
-function Home({user}) {
+function Home({user, setUser}) {
     const [cartItems, setCartItems] = useState([]);
+
+    const handleLogout = () => {
+      setUser([]) //vacia el arreglo, lo que envia a la pagina de login
+    }
   
     const removeProductFromCart = (productId) => {
       setCartItems((prevCartItems) =>
@@ -66,7 +70,8 @@ function Home({user}) {
             />{" "}
             BurgerPlanet
           </h1>
-          <t> Bienvenido {user}!</t>
+          <h5> Bienvenido {user}!</h5>
+          <button onClick={handleLogout}>Cerrar sesión</button>
           <Cart
             cartItems={cartItems}
             aceptarCompra={aceptarCompra}
