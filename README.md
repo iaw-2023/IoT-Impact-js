@@ -1,10 +1,10 @@
 ## Deploys
-### Vercel production:
+### Vercel:
 https://iot-impact-js.vercel.app/
-### Vercel dev:
-https://iot-impact-js-dev.vercel.app/
 ### AWS Amplify:
-https://deploy-aws-amplify.dza6lgfhpbee3.amplifyapp.com/
+https://deploy.dza6lgfhpbee3.amplifyapp.com/
+### Raspberry Pi:
+https://burger-planet.chewer.net/
 
 ---
 
