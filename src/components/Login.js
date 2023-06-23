@@ -16,15 +16,19 @@ export function Login({ setUser }) {
   
     setError(false);
   
-    fetch("https://iot-impact-laravel.vercel.app/rest/users")
+    fetch("https://iot-impact-laravel.vercel.app/rest/loginReact", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: nombre.trim(),
+        password: contraseña.trim(),
+      }),
+    })
       .then((response) => response.json())
       .then((data) => {
-        const foundUser = data.find(
-          (user) =>
-            user.email === nombre.trim() && user.password === contraseña.trim()
-        );
-  
-        if (foundUser) {
+        if (data.status === 200) {
           setUser([nombre.trim()]);
           // Handle successful login
         } else {
@@ -42,6 +46,7 @@ export function Login({ setUser }) {
         console.log(error);
       });
   };
+  
   
 
   const handleRegistrarse = () => {
