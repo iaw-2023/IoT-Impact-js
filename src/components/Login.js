@@ -32,7 +32,7 @@ export function Login({ setUser }) {
             position: "center",
             icon: "error",
             title: "Error en el login",
-            text: "Ha ocurrido un error al procesar el login. Por favor, intenta nuevamente.",
+            text: "Usuario inexistente o contraseña incorrecta.",
             showConfirmButton: true,
           });
         }
