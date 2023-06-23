@@ -145,7 +145,13 @@ function Home({user, setUser}) {
             resolve();
           })
           .catch((error) => {
-            window.confirm("Hubo un error al procesar su orden.");
+            Swal.fire({
+              position: "center",
+              icon: "error",
+              title: "Error en la compra",
+              text: "Ha ocurrido un error al procesar la compra. Por favor, intenta nuevamente.",
+              showConfirmButton: true,
+            });            
             console.error("Error placing order:", error);
             reject(error);
           });

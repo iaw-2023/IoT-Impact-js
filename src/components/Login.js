@@ -8,14 +8,41 @@ export function Login({ setUser }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+  
     if (nombre.trim() === "" || contraseña.trim() === "") {
       setError(true);
       return;
     }
+  
     setError(false);
-
-    setUser([nombre.trim()]);
+  
+    fetch("https://iot-impact-laravel.vercel.app/rest/users")
+      .then((response) => response.json())
+      .then((data) => {
+        const foundUser = data.find(
+          (user) =>
+            user.email === nombre.trim() && user.password === contraseña.trim()
+        );
+  
+        if (foundUser) {
+          setUser([nombre.trim()]);
+          // Handle successful login
+        } else {
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            title: "Error en el login",
+            text: "Ha ocurrido un error al procesar el login. Por favor, intenta nuevamente.",
+            showConfirmButton: true,
+          });
+        }
+      })
+      .catch((error) => {
+        // Handle fetch or server error
+        console.log(error);
+      });
   };
+  
 
   const handleRegistrarse = () => {
     Swal.fire({
@@ -35,7 +62,7 @@ export function Login({ setUser }) {
         const { email, password } = result.value;
   
         // Perform the registration logic here
-        fetch('https://iot-impact-laravel.vercel.app/register', {
+        fetch('https://iot-impact-laravel.vercel.app/rest/register', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -45,12 +72,23 @@ export function Login({ setUser }) {
           .then(response => response.json())
           .then(data => {
             console.log("Registration successful");
-            console.log("User:", data);
-            // Additional actions after successful registration
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "Registro exitoso",
+              showConfirmButton: true,
+            });
           })
           .catch(error => {
             console.error("Registration error:", error);
-            // Handle error scenarios
+            Swal.fire({
+              position: "center",
+              icon: "error",
+              title: "Error en el registro",
+              text: "Ha ocurrido un error al procesar el registro. Por favor, intenta nuevamente.",
+              showConfirmButton: true,
+            });
+            
           });
       }
     });
