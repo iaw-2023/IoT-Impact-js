@@ -32,6 +32,7 @@ export function Login({ setUser }) {
       .then((data) => {
         if (data.message === "Login successful") {
           setUser([nombre.trim()]);
+          localStorage.setItem("user", nombre.trim()); // Store user in localStorage
           // Handle successful login
           
           // Hide the loading message

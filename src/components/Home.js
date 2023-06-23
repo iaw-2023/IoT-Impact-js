@@ -9,6 +9,7 @@ function Home({user, setUser}) {
 
     const handleLogout = () => {
       setUser([]) //vacia el arreglo, lo que envia a la pagina de login
+      localStorage.removeItem("user"); // Remove user from local storage
     }
 
     const mostrarHistorialPedidos = () => {
