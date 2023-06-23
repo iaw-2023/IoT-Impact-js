@@ -13,6 +13,11 @@ function App() {
     }
   }, []);
 
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    setUser([]);
+  };
+
   return (
     <div className="App">
       {!user.length > 0 ? (
