@@ -6,6 +6,8 @@ export function Login({ setUser }) {
   const [contraseña, setContraseña] = useState("");
   const [error, setError] = useState(false);
 
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
   
@@ -28,9 +30,12 @@ export function Login({ setUser }) {
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data.status === 200) {
+        if (data.message === "Login successful") {
           setUser([nombre.trim()]);
           // Handle successful login
+          
+          // Hide the loading message
+          Swal.close();
         } else {
           Swal.fire({
             position: "center",
@@ -45,7 +50,18 @@ export function Login({ setUser }) {
         // Handle fetch or server error
         console.log(error);
       });
+  
+    // Mostrar mensaje de carga inicial
+    Swal.fire({
+      html: '<h5>Cargando...</h5>',
+      showConfirmButton: false,
+      onBeforeOpen: () => {
+        Swal.showLoading();
+      },
+    });
   };
+  
+  
   
   
 
@@ -60,22 +76,36 @@ export function Login({ setUser }) {
       preConfirm: () => {
         const email = Swal.getPopup().querySelector("#swal-input-email").value;
         const password = Swal.getPopup().querySelector("#swal-input-password").value;
+  
+        if (email.trim() === "" || password.trim() === "") {
+          Swal.showValidationMessage("Por favor, complete todos los campos");
+          return false;
+        }
+  
         return { email, password };
       },
     }).then((result) => {
       if (result.isConfirmed) {
         const { email, password } = result.value;
   
+        // Mostrar mensaje de carga inicial
+        Swal.fire({
+          html: '<h5>Cargando...</h5>',
+          showConfirmButton: false,
+          onBeforeOpen: () => {
+            Swal.showLoading();
+          },
+        });
         // Perform the registration logic here
-        fetch('https://iot-impact-laravel.vercel.app/rest/register', {
-          method: 'POST',
+        fetch("https://iot-impact-laravel.vercel.app/rest/register", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({ email, password }),
         })
-          .then(response => response.json())
-          .then(data => {
+          .then((response) => response.json())
+          .then((data) => {
             console.log("Registration successful");
             Swal.fire({
               position: "center",
@@ -84,21 +114,21 @@ export function Login({ setUser }) {
               showConfirmButton: true,
             });
           })
-          .catch(error => {
+          .catch((error) => {
             console.error("Registration error:", error);
             Swal.fire({
               position: "center",
               icon: "error",
               title: "Error en el registro",
-              text: "Ha ocurrido un error al procesar el registro. Por favor, intenta nuevamente.",
+              text:
+                "Ha ocurrido un error al procesar el registro. Asegúrese de que el nombre de usuario no exista.",
               showConfirmButton: true,
             });
-            
           });
       }
     });
   };
-
+  
   return (
     <section>
       <h1 className="titulo">
