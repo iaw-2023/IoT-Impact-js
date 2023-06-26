@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import { initMercadoPago, CardPayment } from '@mercadopago/sdk-react';
+import Swal from "sweetalert2";
 
 const Checkout = () => {
   useEffect(() => {
-    initMercadoPago('TEST-c9f8d6f1-b400-4e9e-908c-ab99994158fe', 
-    {locale: 'es'});
+    initMercadoPago('TEST-c9f8d6f1-b400-4e9e-908c-ab99994158fe',
+      { locale: 'es' });
   }, []);
 
   const initialization = {
@@ -24,27 +25,42 @@ const Checkout = () => {
         theme: 'default', // 'default' | 'dark' | 'bootstrap' | 'flat'
       },
     },
-  
+
   };
 
   const onSubmit = async (formData) => {
+    const data = {
+      email: "admin@iaw.com",
+    };
     return new Promise((resolve, reject) => {
-      fetch('/process_payment', {
-        method: 'POST',
+      fetch("https://iot-impact-laravel.vercel.app/rest/orders/mp", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(data),
       })
         .then((response) => response.json())
-        .then((response) => {
-          resolve();
+        .then((data) => {
+          console.log("Pago exitoso: ", data);
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "¡Pago exitoso!",
+            showConfirmButton: true,
+          }).then(() => {
+            window.location.href = "/";
+            resolve();
+          });
+
         })
         .catch((error) => {
+          console.error("Error en la solicitud: ", error);
           reject();
         });
     });
   };
+
 
   const onError = async (error) => {
     console.log(error);
