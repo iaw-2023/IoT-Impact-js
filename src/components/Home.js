@@ -215,7 +215,7 @@ function Home({ user, setUser }) {
             path="/"
             element={<BarraLateral setCartItems={setCartItems} />}
           />
-          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/checkout" element={<Checkout user={user}/>} />
         </Routes>
 
         <main>{/* Other components or content */}</main>

@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 import { initMercadoPago, CardPayment } from '@mercadopago/sdk-react';
 import Swal from "sweetalert2";
 
-const Checkout = () => {
+const Checkout = ({ user }) => {
+  console.log(user);
   useEffect(() => {
     initMercadoPago('TEST-c9f8d6f1-b400-4e9e-908c-ab99994158fe',
       { locale: 'es' });
@@ -11,7 +12,7 @@ const Checkout = () => {
   const initialization = {
     amount: 100,
     payer: {
-      email: "test@gmail.com",
+      email: user[0],
     },
   };
 
@@ -30,7 +31,7 @@ const Checkout = () => {
 
   const onSubmit = async (formData) => {
     const data = {
-      email: "admin@iaw.com",
+      email: user[0],
     };
     return new Promise((resolve, reject) => {
       fetch("https://iot-impact-laravel.vercel.app/rest/orders/mp", {
