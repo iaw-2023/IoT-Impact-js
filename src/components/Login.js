@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Swal from "sweetalert2";
+import { SERVIDOR } from "../App";
 
 export function Login({ setUser }) {
   const [nombre, setNombre] = useState("");
@@ -18,7 +19,7 @@ export function Login({ setUser }) {
   
     setError(false);
   
-    fetch("https://iot-impact-laravel.vercel.app/rest/loginReact", {
+    fetch(SERVIDOR + "/rest/loginReact", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -98,7 +99,7 @@ export function Login({ setUser }) {
           },
         });
         // Perform the registration logic here
-        fetch("https://iot-impact-laravel.vercel.app/rest/register", {
+        fetch(SERVIDOR + "/rest/register", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
