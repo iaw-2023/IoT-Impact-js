@@ -29,21 +29,22 @@ const Checkout = ({ user }) => {
 
   };
 
-  const onSubmit = async (formData) => {
-    const data = {
-      email: user[0],
-    };
-    return new Promise((resolve, reject) => {
-      fetch("https://iot-impact-laravel.vercel.app/rest/orders/mp", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("Pago exitoso: ", data);
+const onSubmit = async (formData) => {
+  const data = {
+    email: user[0],
+  };
+  return new Promise((resolve, reject) => {
+    fetch("https://iot-impact-nodejs.vercel.app/rest/mp", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Respuesta del servidor: ", data);
+        if (data.status === "approved") {
           Swal.fire({
             position: "center",
             icon: "success",
@@ -53,14 +54,27 @@ const Checkout = ({ user }) => {
             window.location.href = "/";
             resolve();
           });
+        } else {
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            title: "Pago rechazado",
+            text: "El pago no pudo ser procesado",
+            showConfirmButton: true,
+          }).then(() => {
+            reject();
+           // window.location.href = "/checkout";
+            resolve();
+          });
+        }
+      })
+      .catch((error) => {
+        console.error("Error en la solicitud: ", error);
+        reject();
+      });
+  });
+};
 
-        })
-        .catch((error) => {
-          console.error("Error en la solicitud: ", error);
-          reject();
-        });
-    });
-  };
 
 
   const onError = async (error) => {
