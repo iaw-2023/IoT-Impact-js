@@ -4,6 +4,7 @@ import BarraLateral from "./BarraLateral";
 import Cart from "./Cart";
 import Swal from "sweetalert2";
 import Checkout from "./Checkout";
+import { SERVIDOR } from "../App";
 
 function Home({ user, setUser }) {
   const [cartItems, setCartItems] = useState([]);
@@ -17,8 +18,6 @@ function Home({ user, setUser }) {
 
   const mostrarHistorialPedidos = () => {
     const mail = user[0]; // Variable con el email del usuario
-    const ordersUrl = "https://iot-impact-laravel.vercel.app/rest/orders";
-    const itemsUrl = "https://iot-impact-laravel.vercel.app/rest/items";
 
     // Mostrar mensaje de carga inicial
     Swal.fire({
@@ -30,7 +29,7 @@ function Home({ user, setUser }) {
     });
 
     // Obtener los datos del historial de pedidos
-    fetch(ordersUrl)
+    fetch(SERVIDOR + "/rest/orders")
       .then(response => response.json())
       .then(ordersData => {
         // Filtrar los pedidos por customer_email igual a user
@@ -40,7 +39,7 @@ function Home({ user, setUser }) {
           Swal.fire('No tiene pedidos', 'No se encontraron pedidos para el usuario actual.', 'info');
         } else {
           // Obtener los datos de los productos
-          fetch(itemsUrl)
+          fetch(SERVIDOR + "/rest/items")
             .then(response => response.json())
             .then(itemsData => {
               const pedidosPromesas = pedidosUsuario.map((pedido, index) => {
@@ -95,7 +94,7 @@ function Home({ user, setUser }) {
 
   // Función auxiliar para obtener el nombre de un producto por su ID
   const obtenerNombreProducto = (productId) => {
-    return fetch('https://iot-impact-laravel.vercel.app/rest/products')
+    return fetch(SERVIDOR + "/rest/products")
       .then(response => response.json())
       .then(itemsData => {
         const producto = itemsData.find(item => item.id === productId);
@@ -121,6 +120,7 @@ function Home({ user, setUser }) {
         (total, product) => total + parseFloat(product.price),
         0
       ),
+      efectivo: true,
       items: cartItems.map((product) => ({
         product_id: product.id,
         quantity: 1, // Adjust quantity as needed
@@ -129,7 +129,7 @@ function Home({ user, setUser }) {
     };
 
     return new Promise((resolve, reject) => {
-      fetch("https://iot-impact-laravel.vercel.app/rest/orders", {
+      fetch(SERVIDOR + "/rest/orders", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
