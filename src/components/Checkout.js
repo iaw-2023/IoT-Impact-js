@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { initMercadoPago, CardPayment } from '@mercadopago/sdk-react';
 import Swal from "sweetalert2";
+import { SERVIDOR } from "../App";
 
 const Checkout = ({ user }) => {
   console.log(user);
@@ -34,7 +35,7 @@ const onSubmit = async (formData) => {
     email: user[0],
   };
   return new Promise((resolve, reject) => {
-    fetch("https://iot-impact-nodejs.vercel.app/rest/mp", {
+    fetch(SERVIDOR + "/rest/mp", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

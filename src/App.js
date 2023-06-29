@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import Home from "./components/Home";
 import { Login } from "./components/Login";
 
-export const SERVIDOR = "https://iot-impact-nodejs-git-entrega-iot-impact.vercel.app"
+export const SERVIDOR = "https://iot-impact-nodejs.vercel.app"
 
 function App() {
   const [user, setUser] = useState([]);

@@ -4,6 +4,7 @@ import { Tab, ProgressBar } from "react-bootstrap";
 import Categories from "./Categories";
 import Products from "./Products";
 import Swal from "sweetalert2";
+import { SERVIDOR } from "../App";
 
 const BarraLateral = ({ setCartItems }) => {
   const [activeTab, setActiveTab] = useState("");
@@ -15,7 +16,7 @@ const BarraLateral = ({ setCartItems }) => {
     setLoading(true);
 
     fetch(
-      "https://iot-impact-nodejs.vercel.app/rest/categories"
+      SERVIDOR + "/rest/categories"
     )
       .then((response) => response.json())
       .then((data) => {
@@ -25,7 +26,7 @@ const BarraLateral = ({ setCartItems }) => {
       .catch((error) => console.log(error));
 
     fetch(
-      "https://iot-impact-nodejs.vercel.app/rest/products"
+      SERVIDOR + "/rest/products"
     )
       .then((response) => response.json())
       .then((data) => {
