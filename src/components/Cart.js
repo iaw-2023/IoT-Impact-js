@@ -6,14 +6,6 @@ const Cart = ({
   aceptarCompra,
   removeProductFromCart,
 }) => {
-  const [isPurchasing, setIsPurchasing] = useState(false); // State variable for purchase status
-
-  const handlePurchase = () => {
-    if (!isPurchasing) {
-      setIsPurchasing(true);
-      aceptarCompra().then(() => setIsPurchasing(false)); // Reset isPurchasing to false after the purchase is completed
-    }
-  };
 
   const popoverCarrito = (
     <Popover id="popover-basic">
@@ -42,10 +34,10 @@ const Cart = ({
         </div>
         <Button
           variant="primary"
-          onClick={handlePurchase}
-          disabled={isPurchasing || cartItems.length === 0} // Disable button when purchasing or no items in the cart or empty email box
+          onClick={aceptarCompra}
+          disabled={cartItems.length === 0} // Disable button when no items in the cart
         >
-          {isPurchasing ? "Comprando..." : "Comprar"} {/* Display different text based on the purchase status */}
+          Comprar {/* Display different text based on the purchase status */}
         </Button>
       </Popover.Body>
     </Popover>

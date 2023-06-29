@@ -114,6 +114,29 @@ function Home({ user, setUser }) {
   };
 
   const aceptarCompra = () => {
+    Swal.fire({
+      title: '¿Desea pagar en efectivo o con Mercado Pago?',
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonText: 'Efectivo',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Mercado Pago'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        //eligio mercadopago
+        setRedirectToCheckout(true);
+        setCartItems([]);
+      } else {
+        //eligio efectivo
+        efectuarCompraEfectivo();
+        setCartItems([]);              
+      }
+    })
+  }
+
+
+  const efectuarCompraEfectivo = () => {
     const orderData = {
       customer_email: user[0],
       total_amount: cartItems.reduce(
@@ -145,23 +168,7 @@ function Home({ user, setUser }) {
             showConfirmButton: true,
           }).then(() => {
             console.log("Order placed successfully: ", data);
-            Swal.fire({
-              title: '¿Desea pagar en efectivo o con Mercado Pago?',
-              icon: 'info',
-              showCancelButton: true,
-              confirmButtonColor: '#3085d6',
-              cancelButtonText: 'Efectivo',
-              cancelButtonColor: '#d33',
-              confirmButtonText: 'Mercado Pago'
-            }).then((result) => {
-              if (result.isConfirmed) {
-                setRedirectToCheckout(true);
-                setCartItems([]);
-              } else {
-                setCartItems([]);
-                resolve();                
-              }
-            })
+            resolve();
           });
         })
         .catch((error) => {
