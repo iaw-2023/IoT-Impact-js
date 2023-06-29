@@ -1,6 +1,9 @@
 ## Deploys
 ### Vercel:
 https://iot-impact-js.vercel.app/
+
+http://iot-impact-laravel.vercel.app/
+
 ### AWS Amplify:
 https://deploy.dza6lgfhpbee3.amplifyapp.com/
 ### Raspberry Pi:
