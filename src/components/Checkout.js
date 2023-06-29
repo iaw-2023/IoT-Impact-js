@@ -33,9 +33,6 @@ const Checkout = ({ user, cartItems }) => {
   };
 
 const onSubmit = async (formData) => {
-  const data = {
-    email: user[0],
-  };
   return new Promise((resolve, reject) => {
     fetch(SERVIDOR + "/rest/mp", {
       method: "POST",
@@ -48,12 +45,8 @@ const onSubmit = async (formData) => {
       .then((data) => {
         console.log("Respuesta del servidor: ", data);
         if (data.status === "approved") {
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "¡Pago exitoso!",
-            showConfirmButton: true,
-          }).then(() => {
+          //se hace el post del pago
+          efectuarCompraMercadoPago().then(() => {
             window.location.href = "/";
             resolve();
           });
@@ -74,6 +67,55 @@ const onSubmit = async (formData) => {
       .catch((error) => {
         console.error("Error en la solicitud: ", error);
         reject();
+      });
+  });
+};
+
+const efectuarCompraMercadoPago = () => {
+  const orderData = {
+    customer_email: user[0],
+    total_amount: cartItems.reduce(
+      (total, product) => total + parseFloat(product.price),
+      0
+    ),
+    efectivo: false,
+    items: cartItems.map((product) => ({
+      product_id: product.id,
+      quantity: 1, // Adjust quantity as needed
+      individual_price: parseFloat(product.price),
+    })),
+  };
+
+  return new Promise((resolve, reject) => {
+    fetch(SERVIDOR + "/rest/orders", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(orderData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Compra exitosa",
+          showConfirmButton: true,
+        }).then(() => {
+          console.log("Order placed successfully: ", data);
+          resolve();
+        });
+      })
+      .catch((error) => {
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: "Error en la compra",
+          text: "Ha ocurrido un error al procesar la compra. Por favor, intenta nuevamente.",
+          showConfirmButton: true,
+        });
+        console.error("Error placing order:", error);
+        reject(error);
       });
   });
 };
