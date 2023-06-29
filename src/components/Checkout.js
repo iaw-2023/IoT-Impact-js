@@ -85,15 +85,23 @@ const onSubmit = async (formData) => {
     // Código para cuando Brick está listo
   };
 
+  const redirectToHomePage = () => {
+    window.location.href = "/";
+  };
+
   return (
-    <CardPayment
-      initialization={initialization}
-      customization={customization}
-      onSubmit={onSubmit}
-      onReady={onReady}
-      onError={onError}
-    />
+    <div>
+      <CardPayment
+        initialization={initialization}
+        customization={customization}
+        onSubmit={onSubmit}
+        onReady={onReady}
+        onError={onError}
+      />
+      <button onClick={redirectToHomePage}>Volver</button>
+    </div>
   );
 };
 
 export default Checkout;
+

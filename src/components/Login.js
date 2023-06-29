@@ -5,7 +5,6 @@ import { SERVIDOR } from "../App";
 export function Login({ setUser }) {
   const [nombre, setNombre] = useState("");
   const [contraseña, setContraseña] = useState("");
-  const [error, setError] = useState(false);
 
 
 
@@ -13,11 +12,28 @@ export function Login({ setUser }) {
     e.preventDefault();
   
     if (nombre.trim() === "" || contraseña.trim() === "") {
-      setError(true);
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Error en el login",
+        text: "Los campos no deben estar vacios.",
+        showConfirmButton: true,
+      });
       return;
     }
-  
-    setError(false);
+
+    // Email format validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(nombre)) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Error en el login",
+        text: "Por favor ingrese un email válido.",
+        showConfirmButton: true,
+      });
+      return;
+    }
   
     fetch(SERVIDOR + "/rest/loginReact", {
       method: "POST",
@@ -156,7 +172,6 @@ export function Login({ setUser }) {
         />
         <button>Iniciar sesión</button>
       </form>
-      {error && <p>Todos los campos son obligatorios</p>}
       <button onClick={handleRegistrarse}>Registrarse</button>
     </section>
   );
