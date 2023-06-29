@@ -94,9 +94,17 @@ export function Login({ setUser }) {
       preConfirm: () => {
         const email = Swal.getPopup().querySelector("#swal-input-email").value;
         const password = Swal.getPopup().querySelector("#swal-input-password").value;
+
+      // Email format validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   
         if (email.trim() === "" || password.trim() === "") {
           Swal.showValidationMessage("Por favor, complete todos los campos");
+          return false;
+        }
+
+        if (!emailRegex.test(email)) {
+          Swal.showValidationMessage("Por favor, ingrese un email valido");
           return false;
         }
   
