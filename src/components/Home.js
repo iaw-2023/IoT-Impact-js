@@ -10,7 +10,6 @@ function Home({ user, setUser }) {
   const [cartItems, setCartItems] = useState([]);
   const [redirectToCheckout, setRedirectToCheckout] = useState(false);
 
-
   const handleLogout = () => {
     setUser([]) //vacia el arreglo, lo que envia a la pagina de login
     localStorage.removeItem("user"); // Remove user from local storage
@@ -126,7 +125,6 @@ function Home({ user, setUser }) {
       if (result.isConfirmed) {
         //eligio mercadopago
         setRedirectToCheckout(true);
-        setCartItems([]);
       } else {
         //eligio efectivo
         efectuarCompraEfectivo();
@@ -185,7 +183,6 @@ function Home({ user, setUser }) {
     });
   };
 
-
   return (
     <Router>
       <div className="container">
@@ -222,7 +219,7 @@ function Home({ user, setUser }) {
             path="/"
             element={<BarraLateral setCartItems={setCartItems} />}
           />
-          <Route path="/checkout" element={<Checkout user={user}/>} />
+          <Route path="/checkout" element={<Checkout user={user} cartItems={cartItems}/>} />
         </Routes>
 
         <main>{/* Other components or content */}</main>

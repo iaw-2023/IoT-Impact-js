@@ -3,15 +3,17 @@ import { initMercadoPago, CardPayment } from '@mercadopago/sdk-react';
 import Swal from "sweetalert2";
 import { SERVIDOR } from "../App";
 
-const Checkout = ({ user }) => {
+const Checkout = ({ user, cartItems }) => {
   console.log(user);
+  const precioTotalCarrito =  cartItems.reduce((total, product) => total + parseFloat(product.price),0);
+
   useEffect(() => {
     initMercadoPago('TEST-c9f8d6f1-b400-4e9e-908c-ab99994158fe',
       { locale: 'es' });
   }, []);
 
   const initialization = {
-    amount: 100,
+    amount: precioTotalCarrito,
     payer: {
       email: user[0],
     },
