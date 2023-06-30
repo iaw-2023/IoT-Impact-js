@@ -64,7 +64,7 @@ const BarraLateral = ({ setCartItems }) => {
       <Tab.Container activeKey={activeTab} onSelect={handleTabChange}>
         <Dropdown className="mb-3 boton-dropdown" show={menuOpen} onToggle={toggleMenu}>
           <Dropdown.Toggle variant="secondary" id="dropdown-categories">
-            Lista de productos
+            Productos
           </Dropdown.Toggle>
           <Dropdown.Menu>
             <Categories
