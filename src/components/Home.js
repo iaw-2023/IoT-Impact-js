@@ -186,7 +186,11 @@ function Home({ user, setUser }) {
   return (
     <Router>
       <div className="container">
-        {redirectToCheckout && <Navigate to="/checkout" />}
+        {redirectToCheckout && cartItems.length > 0 ? (
+          <Navigate to="/checkout" />
+        ) : (
+          <Navigate to="/" />
+        )}
 
         <div className="header">
           <div className="header">
