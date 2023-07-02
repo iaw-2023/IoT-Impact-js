@@ -39,12 +39,6 @@
   }
 }
 
-.carrito-button {
-  position: fixed;
-  top: 10px;
-  right: 10px;
-}
-
 @font-face {
   font-family: 'Burger Nation';
   src: url(/src/fonts/Burger\ Nation.otf) format('truetype');
@@ -219,4 +213,26 @@ body {
 
 .add-to-cart-icon:hover {
   color: red; /* Change to the desired hover color */
+}
+
+.formulario {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.boton-dropdown {
+  position: absolute;
+  top: 130px; /* Adjust the top position as needed */
+  left: 0px; /* Adjust the left position as needed */
+  z-index: 999; /* hace que este al frente de todo */
+}
+
+.carrito-button {
+  position: fixed;
+  bottom: 50px;
+  right: 50px;
+  z-index: 999;
 }
