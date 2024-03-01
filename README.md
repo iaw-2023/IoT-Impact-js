@@ -20,6 +20,8 @@ https://admin-burger-planet.chewer.net/
 
 ---
 
+Currently set up to use the NodeJS api.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -27,6 +29,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Available Scripts
 
 In the project directory, you can run:
+
+### `npm install`
+
+Installs all the requiring dependencies.
 
 ### `npm start`
 
