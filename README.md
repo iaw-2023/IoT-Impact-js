@@ -3,10 +3,10 @@
 ### Login
 ![](screenshots/login.png)
 ### Browsing products
-![](screenshots/screen1.png)
-![](screenshots/screen2.png)
+![](screenshots/screen1.PNG)
+![](screenshots/screen2.PNG)
 ### Paying using the MercadoPago payment method
-![](screenshots/mercadopago.png)
+![](screenshots/mercadopago.PNG)
 
 ---
 
