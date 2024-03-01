@@ -1,3 +1,15 @@
+## Screenshots
+
+### Login
+![](screenshots/login.png)
+### Browsing products
+![](screenshots/screen1.png)
+![](screenshots/screen2.png)
+### Paying using the MercadoPago payment method
+![](screenshots/mercadopago.png)
+
+---
+
 ## Deploys
 ### Vercel:
 https://iot-impact-js.vercel.app/
