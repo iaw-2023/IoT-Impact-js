@@ -1,3 +1,15 @@
+## Screenshots
+
+### Login
+![](screenshots/login.png)
+### Browsing products
+![](screenshots/screen1.PNG)
+![](screenshots/screen2.PNG)
+### Paying using the MercadoPago payment method
+![](screenshots/mercadopago.PNG)
+
+---
+
 ## Deploys
 ### Vercel:
 https://iot-impact-js.vercel.app/
@@ -20,6 +32,8 @@ https://admin-burger-planet.chewer.net/
 
 ---
 
+Currently set up to use the NodeJS api.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -27,6 +41,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Available Scripts
 
 In the project directory, you can run:
+
+### `npm install`
+
+Installs all the requiring dependencies.
 
 ### `npm start`
 
